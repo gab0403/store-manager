@@ -18,6 +18,11 @@ const getProductsById = async (req, res) => {
 const addProducts = async (req, res) => {
   const { name } = req.body;
   const productsResult = await productsService.addProducts(name);
+  if (productsResult.result) {
+    return res
+      .status(productsResult.result.code)
+      .json({ message: productsResult.result.message });
+  }
   return res.status(201).json(productsResult);
 };
 
