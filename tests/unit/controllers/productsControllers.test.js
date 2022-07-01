@@ -84,3 +84,29 @@ describe('Quando a requisição não é feita com sucesso', () => {
       });
 });
 
+describe("quando é adiconado um novo produto com sucesso", async () => {
+  const response = {};
+  const request = {};
+
+  before(() => {
+    request.body = [
+      {
+        name: "ProdutoX",
+      },
+    ];
+
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(productsService, "addProducts").resolves(true);
+  });
+
+  after(() => {
+    productsService.addProducts.restore();
+  });
+
+  it("é chamado o status com o código 201", async () => {
+    await productsController.addProducts(request, response);
+    expect(response.status.calledWith(201)).to.be.equal(true);
+  });
+});

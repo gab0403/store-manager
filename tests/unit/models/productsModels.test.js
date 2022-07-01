@@ -55,3 +55,24 @@ describe("Retorna os produtos do banco de dados pesquisados pelo id", () => {
   });
 });
 
+describe('Insere um novo produto', async () => {
+  const insertProduct = {
+    name: "ProdutoX",
+  };
+
+  before(async () => {
+    const execute = [{ insertId: 1 }];
+    sinon.stub(connection, "execute").resolves(execute);
+  })
+ 
+  after(async () => {
+    connection.execute.restore();
+  });
+
+  it('Quando o produto é inserido com sucesso', async () => {
+    const response = await productsModel.addProducts(insertProduct.name);
+    expect(response).to.be.a('object');
+    expect(response).to.have.a.property("id");
+  });
+})
+

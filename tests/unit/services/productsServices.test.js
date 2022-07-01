@@ -81,3 +81,37 @@ describe('Quando retorna algum resultado pesquisado pelo id', () => {
     expect(response.length === 0).to.be.equal(false);
   });
 });
+
+describe("Quando retorna algum resultado pesquisado pelo id", () => {
+  const payload = {
+    name: ''
+  };
+
+  before(async () => {
+    const execute = {
+      name: "ProdutoX",
+    };
+
+    sinon.stub(productsModel, "addProducts").resolves(execute);
+  });
+
+  after(async () => {
+    productsModel.addProducts.restore();
+  });
+
+  it("quando não tem sucesso, retorna um array vazio", async () => {
+    const response = await productsService.addProducts("ProdutoX");
+    expect(response.length === 0).to.be.equal(false);
+  });
+
+  it("Quando retorna o produto, retorna o propriedade name", async () => {
+    const response = await productsService.addProducts("ProdutoX");
+    expect(response).to.have.a.property("name");
+  });
+
+  it('Não tem sucesso quando a propriedade name não é inserida', async () => {
+    const response = await productsService.addProducts('');
+    expect(response).to.have.a.not.property("name");
+  })
+
+});
