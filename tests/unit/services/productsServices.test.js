@@ -82,11 +82,7 @@ describe('Quando retorna algum resultado pesquisado pelo id', () => {
   });
 });
 
-describe("Quando retorna algum resultado pesquisado pelo id", () => {
-  const payload = {
-    name: ''
-  };
-
+describe("Adiciona um novo produto", () => {
   before(async () => {
     const execute = {
       name: "ProdutoX",
@@ -104,7 +100,7 @@ describe("Quando retorna algum resultado pesquisado pelo id", () => {
     expect(response.length === 0).to.be.equal(false);
   });
 
-  it("Quando retorna o produto, retorna o propriedade name", async () => {
+  it("Quando tem sucesso, retorna o propriedade name", async () => {
     const response = await productsService.addProducts("ProdutoX");
     expect(response).to.have.a.property("name");
   });
@@ -113,5 +109,59 @@ describe("Quando retorna algum resultado pesquisado pelo id", () => {
     const response = await productsService.addProducts('');
     expect(response).to.have.a.not.property("name");
   })
+
+});
+
+describe("Quando o name é modificado", () => {
+  before(async () => {
+    const execute = {
+      name: "ProdutoX",
+    };
+
+    sinon.stub(productsModel, "updateProducts").resolves(execute);
+  });
+
+  after(async () => {
+    productsModel.updateProducts.restore();
+  });
+  
+  it("quando não tem sucesso, retorna um array vazio", async () => {
+    const response = await productsService.updateProducts(1, "ProdutoX");
+    expect(response.length === 0).to.be.equal(false);
+  });
+
+  it('Quando tem sucesso, retorna o produto modificado', async () => {
+    const response = await productsService.updateProducts(1, "ProdutoX");
+    expect(response).to.have.a.property("name");
+  });
+
+  it('Quando não tem sucesso, a propriedade name não é inserida', async () => {
+    const response = await productsService.updateProducts(1, '');
+    expect(response).to.have.a.not.property("name");
+  });
+
+  it('A propriedade name só é modificada quando tem mais de 5 caracteres', async () => {
+    const response = await productsService.updateProducts("ProdutoX");
+    expect(response.length < 5).to.be.equal(false);
+  });
+});
+ 
+describe('Quando um produto é deletado', () => {
+  before(async () => {
+    const execute = {
+      name: "ProdutoX",
+    };
+      
+    sinon.stub(productsModel, "deleteProducts").resolves(execute);
+  });
+  
+  after(async () => {
+    productsModel.deleteProducts.restore();
+  });
+  
+  it("quando tem sucesso, retorna um objeto a menos", async () => {
+    const response = await productsService.deleteProducts(1);
+    expect(response.length === 2).to.be.equal(false);
+  });
 
 });

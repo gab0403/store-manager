@@ -46,7 +46,7 @@ const deleteProducts = async (req, res) => {
       .status(productsResult.result.code)
       .json({ message: productsResult.result.message });
   }
-  return res.status(204).json(productsResult[0]);
+  return res.status(204).json(productsResult);
 };
 
 module.exports = { getProducts, getProductsById, addProducts, updateProducts, deleteProducts };

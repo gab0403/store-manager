@@ -110,3 +110,64 @@ describe("quando é adiconado um novo produto com sucesso", async () => {
     expect(response.status.calledWith(201)).to.be.equal(true);
   });
 });
+
+
+describe("quando é atualizado um produto com sucesso", async () => {
+   const response = {};
+   const request = {};
+
+  before(() => {
+    request.params = [
+      {
+        id: 1,
+      },
+    ];
+     request.body = [
+       {
+         name: "ProdutoX",
+       },
+     ];
+
+     response.status = sinon.stub().returns(response);
+     response.json = sinon.stub().returns();
+
+     sinon.stub(productsService, "updateProducts").resolves(true);
+   });
+
+   after(() => {
+     productsService.updateProducts.restore();
+   });
+
+  it("é chamado o status com o código 200", async () => {
+    await productsController.updateProducts(request, response);
+    expect(response.status.calledWith(200)).to.be.equal(true);
+  });
+});
+
+describe("quando é deletado um produto com sucesso", async () => {
+  const response = {};
+  const request = {};
+
+  before(() => {
+    request.params = [
+      {
+        id: 1,
+      },
+    ];
+
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(productsService, "deleteProducts").resolves(true);
+  });
+
+  after(() => {
+    productsService.deleteProducts.restore();
+  });
+
+  it("é chamado o status com o código 204", async () => {
+    await productsController.deleteProducts(request, response);
+    expect(response.status.calledWith(204)).to.be.equal(true);
+  });
+}
+);

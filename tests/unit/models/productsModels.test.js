@@ -76,3 +76,52 @@ describe('Insere um novo produto', async () => {
   });
 })
 
+describe('Atualiza um produto', async () => {
+  before(() => {
+    const execute = [
+      {
+        name: "Martelo do Batman",
+      },
+    ];
+    sinon.stub(connection, "execute").resolves(execute);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it("Quando o produto é atualizado com sucesso", async () => {
+    const response = await productsModel.updateProducts({ name: "Martelo do Batman" });
+    expect(response).to.be.a("object");
+  });
+  
+});
+
+describe('Deleta um produto', async () => {
+   before(() => {
+     const responseObj = [
+       {
+         id: 1,
+         name: "Martelo de Thor",
+       },
+       {
+         id: 2,
+         name: "Traje de encolhimento",
+       },
+       {
+         id: 3,
+         name: "Escudo do Capitão América",
+       },
+     ];
+     sinon.stub(connection, "execute").resolves(responseObj);
+   });
+
+   after(() => {
+     connection.execute.restore();
+   });
+ 
+  it('Quando o produto é deletado com sucesso', async () => {
+    const response = await productsModel.deleteProducts(1);
+    expect(response.length === 2).to.be.equal(false);
+  });
+});
