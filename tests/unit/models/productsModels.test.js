@@ -70,7 +70,7 @@ describe('Insere um novo produto', async () => {
   });
 
   it('Quando o produto é inserido com sucesso', async () => {
-    const response = await productsModel.addProducts(insertProduct.name);
+    const response = await productsModel.addProducts(insertProduct);
     expect(response).to.be.a('object');
     expect(response).to.have.a.property("id");
   });

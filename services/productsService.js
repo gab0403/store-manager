@@ -26,4 +26,19 @@ const addProducts = async (name) => {
   return productsResult;
 };
 
-module.exports = { getProducts, getProductsById, addProducts };
+const updateProducts = async (id, name) => {
+  if (!name) return { result: { code: 400, message: '"name" is required' } };
+  if (name.length < 5) {
+    return {
+      result: {
+        code: 422,
+        message: '"name" length must be at least 5 characters long',
+      },
+    };
+  }
+  const productsResult = await productsModel.updateProducts({ id, name });
+  if (productsResult.length === 0) return { result: { code: 404, message: 'Product not found' } };
+  return productsResult;
+};
+
+module.exports = { getProducts, getProductsById, addProducts, updateProducts };
