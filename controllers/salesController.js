@@ -20,4 +20,25 @@ const createSale = async (req, res) => {
   return res.status(201).json(response);
 };
 
-module.exports = { createSale };
+const getSales = async (req, res) => {
+  const resultSales = await salesService.getSales();
+  if (resultSales.result) {
+    return res
+      .status(resultSales.result.code)
+      .json({ message: resultSales.result.message });
+  }
+  return res.status(200).json(resultSales);
+};
+
+const getSalesById = async (req, res) => {
+  const { id } = req.params;
+  const resultSales = await salesService.getSalesById(id);
+  if (resultSales.result) {
+    return res
+      .status(resultSales.result.code)
+      .json({ message: resultSales.result.message });
+  }
+  return res.status(200).json(resultSales);
+};
+  
+module.exports = { createSale, getSales, getSalesById };

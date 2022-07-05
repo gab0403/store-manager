@@ -34,4 +34,20 @@ const validateProduct = async (sales) => {
   return [];
 };
 
-module.exports = { addProductsOnSale, validateSale, validateProduct };
+const getSales = async () => {
+  const result = await salesModel.getSales();
+  if (result.length === 0) {
+    return { result: { code: 404, message: 'Sale not found' } };
+  }
+  return result;
+};
+
+const getSalesById = async (id) => {
+  const result = await salesModel.getSalesById(id);
+  if (result.length === 0) {
+    return { result: { code: 404, message: 'Sale not found' } };
+  }
+  return result;
+};
+
+module.exports = { addProductsOnSale, validateSale, validateProduct, getSales, getSalesById };
