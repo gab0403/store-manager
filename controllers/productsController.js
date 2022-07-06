@@ -49,4 +49,21 @@ const deleteProducts = async (req, res) => {
   return res.status(204).json(productsResult);
 };
 
-module.exports = { getProducts, getProductsById, addProducts, updateProducts, deleteProducts };
+const searchProducts = async (req, res) => {
+  const { q } = req.query;
+  const productsResult = await productsService.searchProducts(q);
+  if (!q) return res.status(200).json(productsResult);
+  const productsInfo = productsResult.filter(
+    (e) => e.name.toLowerCase().includes(q.toLowerCase()),
+    );
+    return res.status(200).json(productsInfo);
+};
+
+module.exports = {
+  getProducts,
+  getProductsById,
+  addProducts,
+  updateProducts,
+  deleteProducts,
+  searchProducts,
+};

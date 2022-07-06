@@ -49,4 +49,19 @@ const [rows] = await connection.execute(
   return rows;
 };
 
-module.exports = { getProducts, getProductsById, addProducts, updateProducts, deleteProducts };
+const searchProducts = async (name) => {
+  const [rows] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE name LIKE ?',
+    [`%${name}%`],
+  );
+  return rows;
+};
+
+module.exports = {
+  getProducts,
+  getProductsById,
+  addProducts,
+  updateProducts,
+  deleteProducts,
+  searchProducts,
+};

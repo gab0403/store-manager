@@ -56,17 +56,12 @@ const deleteSales = async (id) => {
   return deleteSaleResult;
 };
 
-const updateSales = async (id, sales) => {
-  const validateSaleResult = await validateSale(sales);
-  if (validateSaleResult.result) {
-    return { result: { code: 404, message: 'Sale not found' } };
-  }
-  
+const updateSales = async (id, sales) => { 
   const validateId = await salesModel.getSalesById(id);
   if (validateId.length === 0) {
     return { result: { code: 404, message: 'Sale not found' } };
   }
-  
+
   const updateSalesResult = await salesModel.updateSales(id, sales);
   return {
     saleId: updateSalesResult,

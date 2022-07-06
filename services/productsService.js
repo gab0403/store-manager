@@ -48,4 +48,17 @@ const deleteProducts = async (id) => {
   return deleteProductsResult;
 };
 
-module.exports = { getProducts, getProductsById, addProducts, updateProducts, deleteProducts };
+const searchProducts = async (name) => {
+  const productsResult = await productsModel.searchProducts(name);
+  if (!productsResult) return [];
+  return productsResult;
+};
+
+module.exports = {
+  getProducts,
+  getProductsById,
+  addProducts,
+  updateProducts,
+  deleteProducts,
+  searchProducts,
+};
