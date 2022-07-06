@@ -51,5 +51,27 @@ const deleteSales = async (req, res) => {
   }
   return res.status(204).json(resultSales);
 };
+
+const updateSales = async (req, res) => {
+  const { id } = req.params;
+  const validateSale = await salesService.validateSale(req.body);
+  const validateProduct = await salesService.validateProduct(req.body);
+  if (validateSale.result) {
+    return res.status(validateSale.result.code)
+      .json({ message: validateSale.result.message });
+  }
   
-module.exports = { createSale, getSales, getSalesById, deleteSales };
+  if (validateProduct.result) {
+    return res
+    .status(validateProduct.result.code)
+    .json({ message: validateProduct.result.message });
+  }
+  
+  const resultSales = await salesService.updateSales(id, req.body);
+  if (resultSales.result) {
+    return res.status(resultSales.result.code).json({ message: resultSales.result.message });
+  }
+  return res.status(200).json(resultSales);
+};
+
+module.exports = { createSale, getSales, getSalesById, deleteSales, updateSales };
