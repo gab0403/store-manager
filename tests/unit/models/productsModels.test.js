@@ -125,3 +125,23 @@ describe('Deleta um produto', async () => {
     expect(response.length === 2).to.be.equal(false);
   });
 });
+
+describe('Retorna os produtos do banco de dados pesquisados pelo nome', () => {
+  before(() => {
+    const execute = [{
+      id: 1,
+      name: "Martelo de Thor",
+    }];
+    sinon.stub(connection, "execute").resolves(execute);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  })
+  it("Retorna tal produto do nome pesquisado", async () => {
+    const response = await productsModel.searchProducts("Martelo de Thor");
+    expect(response).to.be.a('object');
+    expect(response).to.have.a.property("id");
+    expect(response.id).to.be.equal(1);
+  });
+});
