@@ -10,7 +10,7 @@
 
   ![DER](./erStoreManager.png)
 
-## Para executar os testes de unidade:
+## Para executar os testes:
   ```sh
     npm run test:mocha
   ```
