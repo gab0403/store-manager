@@ -8,7 +8,24 @@
 
   ## Diagrama de Entidade-Relacionamento
 
-  ![DER](./erStoreManager.png)
+  ![DER](./images/erStoreManager.png)
+
+## Tabelas
+
+ ### A tabela `products` tem o seguinte formato: *(O id será gerado automaticamente)*
+
+  ![Tabela Produtos](./images/tableproducts.png)
+
+ ### A tabela `sales` tem o seguinte formato: *(O id e date são gerados automaticamente)*
+
+  ![Tabela Vendas](./images/tablesales.png)
+
+
+ ### A tabela `sales_products`, é a tabela que faz o relacionamento `N:N` entre `products` e `sales` e tem o seguinte formato: *(O produto e a venda são deletados automaticamente)*
+
+  ![Tabela Vendas-Produtos](./images/tablesalesproducts.png)
+  
+---
 
 ## Para executar os testes de unidade:
   ```sh
